@@ -1,10 +1,7 @@
-[package]
-name = "bevy_three_bodies"
-version = "0.1.0"
-edition = "2021"
+[workspace]
+members = ["simulation"]
+default-members = ["simulation"]
+resolver = "2"
 
-[dependencies]
-bevy = "0.13.2"
-
-[dev-dependencies]
+[workspace.dependencies]
 rusty-hook = "0.11.2"
