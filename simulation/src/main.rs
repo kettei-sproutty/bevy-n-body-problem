@@ -1,6 +1,7 @@
-use bevy::diagnostic::FrameTimeDiagnosticsPlugin;
+mod render_body_plugin;
+
 use bevy::prelude::*;
-use iyes_perf_ui::prelude::*;
+use render_body_plugin::RenderBodiesPlugin;
 
 fn main() {
   #[cfg(not(target_arch = "wasm32"))]
@@ -25,22 +26,6 @@ fn main() {
 
   App::new()
     .add_plugins(plugins)
-    .add_plugins(FrameTimeDiagnosticsPlugin)
-    .add_plugins(PerfUiPlugin)
-    .add_systems(Startup, setup)
+    .add_plugins(RenderBodiesPlugin)
     .run();
-}
-
-fn setup(mut commands: Commands) {
-  commands.spawn(Camera2dBundle::default());
-
-  commands.spawn((
-    PerfUiRoot {
-      display_labels: false,
-      layout_horizontal: true,
-      ..default()
-    },
-    PerfUiEntryFPSWorst::default(),
-    PerfUiEntryFPS::default(),
-  ));
 }
