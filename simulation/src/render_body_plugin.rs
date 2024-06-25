@@ -40,8 +40,8 @@ fn add_bodies(
   for (index, shape) in shapes.into_iter().enumerate() {
     commands.spawn((
       Body,
-      Mass(10),
-      Speed(10.0),
+      Mass(10),    // TODO: configurable
+      Speed(10.0), // TODO: Set to 0.0
       MaterialMesh2dBundle {
         mesh: shape,
         material: materials.add(color),
