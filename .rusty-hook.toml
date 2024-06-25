@@ -1,5 +1,6 @@
 [hooks]
 pre-commit = "cargo clippy -- -Dwarnings"
+pre-push = "cargo build"
 
 [logging]
 verbose = true
