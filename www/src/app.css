@@ -4,4 +4,10 @@
 
 html {
   font-size: 100%;
+  @apply h-dvh bg-base text-pretty overscroll-none;
+}
+
+/* https://bevyengine.org/learn/migration-guides/0-12-to-0-13/#remove-canvasparentresizeplugin */
+canvas {
+  @apply !w-full !h-full
 }
