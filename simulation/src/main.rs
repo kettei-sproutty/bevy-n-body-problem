@@ -3,22 +3,21 @@ use bevy::prelude::*;
 use iyes_perf_ui::prelude::*;
 
 fn main() {
-  #[cfg(target_arch = "wasm32")]
-  let window_plugin = WindowPlugin {
-    primary_window: Some(Window {
-      title: "Simulation".to_string(),
-      canvas: Some("#simulation".to_string()),
-      ..Default::default()
-    }),
+  #[cfg(not(target_arch = "wasm32"))]
+  let window = Window {
+    title: "Simulation".to_string(),
     ..Default::default()
   };
 
-  #[cfg(not(target_arch = "wasm32"))]
+  #[cfg(target_arch = "wasm32")]
+  let window = Window {
+    title: "Simulation".to_string(),
+    canvas: Some("#simulation".to_string()),
+    ..Default::default()
+  };
+
   let window_plugin = WindowPlugin {
-    primary_window: Some(Window {
-      title: "Simulation".to_string(),
-      ..Default::default()
-    }),
+    primary_window: Some(window),
     ..Default::default()
   };
 
