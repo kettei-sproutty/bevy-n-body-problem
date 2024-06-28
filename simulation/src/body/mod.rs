@@ -1,4 +1,7 @@
-use bevy::prelude::*;
+use bevy::{
+  prelude::*,
+  sprite::{MaterialMesh2dBundle, Mesh2dHandle},
+};
 use bevy_rapier2d::prelude::*;
 
 pub struct BodyPlugin;
@@ -13,30 +16,33 @@ impl Plugin for BodyPlugin {
   }
 }
 
-#[derive(Debug, Bundle)]
+#[derive(Bundle)]
 pub struct BodyBundle {
   pub collider: Collider,
   pub mass_properties: ColliderMassProperties,
   pub gravity_scale: GravityScale,
-  pub transform: TransformBundle,
   pub velocity: Velocity,
+  pub mesh: MaterialMesh2dBundle<ColorMaterial>,
 }
 
-impl Default for BodyBundle {
-  fn default() -> Self {
-    Self {
-      collider: Collider::ball(1.0),
-      mass_properties: ColliderMassProperties::Density(1.0),
-      gravity_scale: GravityScale(0.0),
-      transform: TransformBundle::from(Transform::from_xyz(0.0, 0.0, 0.0)),
-      velocity: Velocity {
-        linvel: Vec2::new(0.0, 0.0),
-        angvel: 0.0,
-      },
-    }
-  }
-}
-
-fn setup(mut commands: Commands) {
-  commands.spawn(BodyBundle::default());
+fn setup(
+  mut commands: Commands,
+  mut meshes: ResMut<Assets<Mesh>>,
+  mut materials: ResMut<Assets<ColorMaterial>>,
+) {
+  commands.spawn(BodyBundle {
+    collider: Collider::ball(1.0),
+    mass_properties: ColliderMassProperties::Density(1.0),
+    gravity_scale: GravityScale(0.0),
+    velocity: Velocity {
+      linvel: Vec2::new(0.0, 0.0),
+      angvel: 0.0,
+    },
+    mesh: MaterialMesh2dBundle {
+      material: materials.add(Color::RED),
+      mesh: Mesh2dHandle(meshes.add(Circle { radius: 10.0 })),
+      transform: Transform::from_xyz(100., 0., 0.),
+      ..default()
+    },
+  });
 }
