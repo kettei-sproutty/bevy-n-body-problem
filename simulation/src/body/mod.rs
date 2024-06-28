@@ -22,15 +22,21 @@ pub struct BodyBundle {
   pub velocity: Velocity,
 }
 
+impl Default for BodyBundle {
+  fn default() -> Self {
+    Self {
+      collider: Collider::ball(1.0),
+      mass_properties: ColliderMassProperties::Density(1.0),
+      gravity_scale: GravityScale(0.0),
+      transform: TransformBundle::from(Transform::from_xyz(0.0, 0.0, 0.0)),
+      velocity: Velocity {
+        linvel: Vec2::new(0.0, 0.0),
+        angvel: 0.0,
+      },
+    }
+  }
+}
+
 fn setup(mut commands: Commands) {
-  commands.spawn(BodyBundle {
-    collider: Collider::ball(1.0),
-    mass_properties: ColliderMassProperties::Density(1.0),
-    gravity_scale: GravityScale(0.0),
-    transform: TransformBundle::from(Transform::from_xyz(0.0, 0.0, 0.0)),
-    velocity: Velocity {
-      linvel: Vec2::new(0.0, 0.0),
-      angvel: 0.0,
-    },
-  });
+  commands.spawn(BodyBundle::default());
 }
