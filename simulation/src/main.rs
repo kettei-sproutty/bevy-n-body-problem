@@ -1,7 +1,11 @@
-mod render_body_plugin;
+mod body;
+mod camera;
+mod constants;
 
 use bevy::prelude::*;
-use render_body_plugin::RenderBodiesPlugin;
+use bevy_editor_pls::prelude::*;
+use bevy_rapier2d::prelude::*;
+use body::BodyPlugin;
 
 fn main() {
   #[cfg(not(target_arch = "wasm32"))]
@@ -26,6 +30,9 @@ fn main() {
 
   App::new()
     .add_plugins(plugins)
-    .add_plugins(RenderBodiesPlugin)
+    .add_systems(Startup, camera::setup)
+    .add_plugins(EditorPlugin::default())
+    .add_plugins(RapierPhysicsPlugin::<NoUserData>::pixels_per_meter(100.0))
+    .add_plugins(BodyPlugin)
     .run();
 }
